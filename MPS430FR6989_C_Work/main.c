@@ -1,22 +1,19 @@
-#include <msp430fr6989.h> // Register definitions
-void main(void)
+// Program to look at couting in binary and learn new features in CCS
+
+#include <msp430.h> // Used to make code easier to read
+
+#define DEVELOPMENT 0x5A80  //Used to disable watchdog timer for development
+
+main()
 {
-    unsigned short int i;
-    WDTCTL = WDTPW + WDTHOLD;
-    P1DIR = P1DIR | 0x01;
-    P1REN = P1REN | 0x08;
-    P1OUT = P1OUT | 0x08;
-    while(1)
+    WDTCTL = DEVELOPMENT; // Disable watchdog timer for development
+
+    long count = 0;
+
+    while(count<20)
     {
-        if (0x08 & P1IN)
-        {
-            P1OUT = P1OUT ^ 0x01;
-            for(i=0 ; i<5000 ; i++);
-        }
-        else
-        {
-            P1OUT = P1OUT ^ 0x01;
-            for(i=0 ; i<20000 ; i++);
-        }
+        count = count + 1;
     }
-}//end main()
+
+    while (1);
+}
